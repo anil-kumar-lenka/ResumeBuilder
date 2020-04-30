@@ -1,0 +1,344 @@
+﻿@model ResumeBuilder.ViewModels.ProfileVM
+@{
+    Layout = null;
+}
+@if (Model.ErrorMsg != null)
+{
+    <script>
+        alert('@Model.ErrorMsg');
+    </script>
+}
+else
+{
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Profile</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/Content/public-profile-style.css" type="text/css">
+    </head>
+    <body data-spy="scroll" data-target=".scroll-spy-div" data-offset="50">
+        <div class="container-fluid d-flex fixed-top bg-primary justify-content-around scroll-spy-div">
+            <a href="https://www.mindfiresolutions.com/" class="no-underline text-white">
+                <div class="p-1 logo-container-div">
+                    <i>
+                        <img src="~/Content/Images/logo_img.jpg" alt="Logo_Img" />
+                        <span class="logo"><b>mindfire</b> solutions</span>
+                        <small class="logo-small">BURN IGNORANCE</small>
+                    </i>
+                </div>
+            </a>
+            <div class="d-flex justify-content-end">
+                <div id="basicInfoNav" class="nav-hover">
+                    <a href="#basicInfo" class="text-white no-underline">
+                        <div class="p-3">
+                            <b><i class="fa fa-home"></i> Basic Info</b>
+                        </div>
+                    </a>
+                </div>
+                @if (Model.WorkExList.Count != 0)
+                {
+                    <div id="workExperienceNav" class="nav-hover">
+                        <a href="#workExperience" class="text-white no-underline">
+                            <div class="p-3">
+                                <b><i class="fa fa-folder"></i> Work Ex.</b>
+                            </div>
+                        </a>
+                    </div>
+                }
+                @if (Model.ProjectList.Count != 0)
+                {
+                    <div id="projectsNav" class="nav-hover">
+                        <a href="#projects" class="text-white no-underline">
+                            <div class="p-3">
+                                <b><i class="fa fa-tasks"></i> Projects</b>
+                            </div>
+                        </a>
+                    </div>
+                }
+                @if (Model.SkillList.Count != 0)
+                {
+                    <div id="skillsNav" class="nav-hover">
+                        <a href="#skills" class="text-white no-underline">
+                            <div class="p-3">
+                                <b><i class="fa fa-line-chart"></i> Skills</b>
+                            </div>
+                        </a>
+                    </div>
+                }
+                @if (Model.EducationList.Count != 0)
+                {
+                    <div id="educationNav" class="nav-hover">
+                        <a href="#education" class="text-white no-underline">
+                            <div class="p-3">
+                                <b><i class="fa fa-graduation-cap"></i> Education</b>
+                            </div>
+                        </a>
+                    </div>
+                }
+                @if (Model.Languages.Count != 0)
+                {
+                    <div id="languagesNav" class="nav-hover">
+                        <a href="#languages" class="text-white no-underline">
+                            <div class="p-3">
+                                <b><i class="fa fa-language"></i> Languages</b>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Basic Information -->
+        <div class="container pseudo-element" id="basicInfo">
+            <div class="no-gutters">
+                <div class="col-lg-12 col-md-12">
+                    <div class="p-4 bg-blue-design text-primary">
+                        <div class="row">
+                            <div class="col-lg-10 col-md-8 col-sm-7">
+                                <h1 class="display-5 d-block heading-name">@Model.Name</h1>
+                            </div>
+                            <div class="col-lg-2 col-md-4 col-sm-5">
+                                <div class="row">
+                                    <a href="#" class="text-primary">
+                                        <i class="fa fa-phone"> @Model.PhoneNumber</i>
+                                    </a>
+                                </div>
+                                <div class="row">
+                                    <a href="http://gmail.com" class="text-primary">
+                                        <i class="fa fa-envelope"> @Model.Email</i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-white">
+                        <div class="text-center p-2  css-summary" style="opacity: .8">
+                            @Model.Summary
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Work Experience -->
+        @if (Model.WorkExList.Count != 0)
+        {
+            <div class="container">
+                <div id="workExperience" class="pseudo-element">
+                    <div class="p-2 text-primary bg-blue-design text-center">
+                        <i class="fa fa-folder fa-2x text-primary"> Work Experiences</i>
+                    </div>
+                    <div class="p-3 bg-white">
+                        <div id="workExTimelineId" class="timeline bg-white">
+                            @if (Model.WorkExList != null)
+                            {
+                                foreach (var data in Model.WorkExList)
+                                {
+                                    <div class="container-timeline">
+                                        <div class="content text-center">
+                                            @if (@data.CurrentlyWorking == true)
+                                            {
+                                                <h3><b>@data.OrganizationName</b> <small>(Currently Working)</small></h3>
+                                                <div><b>Role : </b>@data.Role</div>
+                                                <div>From <b>@data.StartMonth/@data.StartYear</b></div>
+                                            }
+                                            else
+                                            {
+                                                <h3><b>@data.OrganizationName</b></h3>
+                                                <div><b>Role : </b>@data.Role</div>
+                                                <div>From <b>@data.StartMonth/@data.StartYear</b> To <b>@data.EndMonth/@data.EndYear</b></div>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- Projects -->
+        @if (Model.ProjectList.Count != 0)
+        {
+            <div class="container">
+                <div id="projects" class="pseudo-element">
+                    <div class="p-2 text-primary bg-blue-design text-center">
+                        <i class="fa fa-tasks fa-2x text-primary"> Projects</i>
+                    </div>
+                    <div class="p-3 bg-white">
+                        <div id="projectTimelineId" class="timeline bg-white">
+                            @if (Model.ProjectList != null)
+                            {
+                                foreach (var data in Model.ProjectList)
+                                {
+                                    <div class="container-timeline">
+                                        <div class="content text-center">
+                                            <h3><b>@data.Title</b></h3>
+                                            <div><b>Role : </b>@data.projectRole</div>
+                                            <p>@data.Description</p>
+                                            <div><b>Duration : </b>@data.Duration Months</div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- Skills -->
+        @if (Model.SkillList.Count != 0)
+        {
+            <div class="container">
+                <div id="skills" class="pseudo-element text-center">
+                    <div class="p-2 flex-fill bg-blue-design text-center">
+                        <i class="fa fa-line-chart fa-2x text-primary"> Skills</i>
+                    </div>
+                    <div class="d-flex flex-wrap align-items-stretch align-content-center justify-content-around bg-white">
+                        @if (Model.SkillList != null)
+                        {
+                            foreach (var data in Model.SkillList)
+                            {
+                                <div class="mb-3 mt-4 ml-2 mr-2 text-center bg-card">
+                                    <div class="card-header education-text-header-size"><b>@data</b></div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- Education -->
+        @if (Model.EducationList.Count != 0)
+        {
+            <div class="container">
+                <div id="education" class="pseudo-element text-center">
+                    <div class="p-2 flex-fill bg-blue-design text-center">
+                        <i class="fa fa-graduation-cap fa-2x text-primary"> Educational Details</i>
+                    </div>
+                    <div class="d-flex flex-wrap align-items-stretch align-content-center justify-content-around bg-white">
+                        @if (Model.EducationList != null)
+                        {
+                            foreach (var data in Model.EducationList)
+                            {
+                                <div class="mb-3 mt-4 ml-2 mr-2 text-center bg-card">
+                                    <div class="card-header education-text-header-size"><b>@data.CourseName @data.Stream</b></div>
+                                    <div class="card-body">
+                                        <div><b>Board : </b>@data.Board</div>
+                                        <div><b>@data.CGPAOrPercentage : </b><label>@data.TotalPercentorCGPAValue</label></div>
+                                    </div>
+                                    <div class="card-footer"><b>Passing Year - </b>@data.PassingYear</div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!--Languages-->
+        @if (Model.Languages.Count != 0)
+        {
+            <div class="container">
+                <div id="languages" class="pseudo-element">
+                    <div class="p-2 flex-fill bg-blue-design text-center">
+                        <i class="fa fa-language fa-2x text-primary"> Language Known</i>
+                    </div>
+                    <div class="d-flex flex-wrap align-items-stretch align-content-center justify-content-around bg-white">
+                        @if (Model.Languages != null)
+                        {
+                            foreach (var data in Model.Languages)
+                            {
+                                <div class="mb-3 mt-4 ml-2 mr-2 text-center bg-card">
+                                    <div class="card-header education-text-header-size"><b>@data</b></div>
+                                </div>
+                            }
+                        }
+                        </div>
+                    </div>
+            </div>
+        }
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-blue-design p-2">
+                    <div class="row p-1">
+                        <div class="pull-left col-lg-4 col-xs-12 text-primary">
+                            Copyright &copy;2020 by<span style="opacity: .7;"> Mindfire Solutions</span>
+                        </div>
+                        <div class="col-lg-4 offset-lg-4 col-xs-12">
+                            <div class="pull-right">
+                                <a href="https://www.linkedin.com/company/mindfire-solutions"><i class="fa fa-linkedin-square text-primary"></i></a>
+                                <a href="https://twitter.com/mindfires"><i class="fa fa-twitter-square text-primary"></i></a>
+                                <a href="https://plus.google.com/111970111220820687030?prsrc=3"><i class="fa fa-google-plus-square text-primary"></i></a>
+                                <a href="https://www.facebook.com/MindfireSolutions"><i class="fa fa-facebook-square text-primary"></i></a>
+                                <a href="https://www.mindfiresolutions.com/blog/"><i class="fa fa-book text-primary"></i></a>
+                                <a href="https://www.youtube.com/user/MindfireSolutions"><i class="fa fa-youtube-square text-primary"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- CDN / Script Links -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/ModelScripts/ProfileScript.js"></script>
+        <!-- Internal JavaScript Code -->
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                $('body').scrollspy({target: ".scroll-spy-div"});
+
+                if(@Model.WorkExperienceStatus === 0)
+                {
+                    $('#workExperience, #workExperienceNav').hide();
+                }
+                else
+                {
+                    for(var i = 0; i < @Model.WorkExList.Count; i++)
+                    {
+                        if(i % 2 === 0)
+                            $('#workExTimelineId').children().eq(i).addClass("timeline-left");
+                        else
+                            $('#workExTimelineId').children().eq(i).addClass("timeline-right");
+                    }
+                }
+
+                if(@Model.ProjectStatus === 0)
+                {
+                    $('#projects, #projectsNav').hide();
+                }
+                else
+                {
+                    for(var i = 0; i < @Model.ProjectList.Count; i++)
+                    {
+                        if(i % 2 === 0)
+                            $('#projectTimelineId').children().eq(i).addClass("timeline-left");
+                        else
+                            $('#projectTimelineId').children().eq(i).addClass("timeline-right");
+                    }
+                }
+                if(@Model.SkillStatus === 0)
+                    $('#skills, #skillsNav').hide();
+                if(@Model.EducationStatus === 0)
+                    $('#education, #educationNav').hide();
+                if(@Model.LanguageStatus === 0)
+                    $('#languages, #languagesNav').hide();
+            });
+        </script>
+
+    </body>
+</html>
+}
